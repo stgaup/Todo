@@ -18,4 +18,4 @@ todo remove 1
 Clear list:  
 todo clear  
   
-The list is saved into a json file called "todo.json" which is placed with the executables.
+The list is saved into a json file called "todo.json" which is placed in a folder called Todo inside the My Documents folder in the currently logged in users profile.
