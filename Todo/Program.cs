@@ -41,6 +41,7 @@ namespace Todo
                     Console.WriteLine("  add, a    : Adds todo item. Parameter is item; must be quoted.");
                     Console.WriteLine("  remove, r : Removes an item. Parameter is index of item to be removed.");
                     Console.WriteLine("  list, l   : Lists all items. No parameter.");
+                    Console.WriteLine("  find, d   : Lists all items that contain the given text. Parameter is text to search for.");
                     Console.WriteLine("  clear     : Clears list of all items.");
                     Console.WriteLine("If no argument is given, the list action will be executed.");
                     Console.WriteLine();
