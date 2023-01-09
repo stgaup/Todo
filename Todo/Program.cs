@@ -129,6 +129,7 @@ namespace Todo
                 if (!string.IsNullOrEmpty(textToSearchFor) 
                     && !itm.Contains(textToSearchFor, StringComparison.InvariantCultureIgnoreCase))
                 {
+                    i++;
                     continue;
                 }
                 Console.WriteLine($"{i++}: {itm}");
