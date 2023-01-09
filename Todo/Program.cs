@@ -4,7 +4,7 @@ namespace Todo
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main(string?[] args)
         {
             var path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments).TrimEnd('\\') + "\\Todo\\";
             if (!Directory.Exists(path))
@@ -14,16 +14,16 @@ namespace Todo
             var fileName = $"{path}todo.json";
 
             // Create a list to store our todo items
-            List<string>? todoList = new List<string>();
+            List<string?> todoList = new List<string?>();
 
             // Load the todo list from the JSON file
             try
             {
-                todoList = JsonConvert.DeserializeObject<List<string>>(File.ReadAllText(fileName)) ?? new List<string>();
+                todoList = JsonConvert.DeserializeObject<List<string>>(File.ReadAllText(fileName)) ?? new List<string?>();
             }
             catch (FileNotFoundException)
             {
-                todoList = new List<string>();
+                todoList = new List<string?>();
             }
 
             var arg = args.Length > 0 ? args[0] : string.Empty;
@@ -84,6 +84,16 @@ namespace Todo
                 case "list":
                     ListItems(todoList);
                     break;
+                case "f":
+                case "find":
+                    if (args.Length < 2)
+                    {
+                        Console.WriteLine("Missing argument. Expected text to search for as argument.");
+                        return;
+                    }
+                    var textToSearchFor = args[1];
+                    ListItems(todoList, textToSearchFor);
+                    break;
                 default:
                     if (!string.IsNullOrWhiteSpace(arg))
                     {
@@ -99,7 +109,7 @@ namespace Todo
             File.WriteAllText(fileName, JsonConvert.SerializeObject(todoList.OrderBy(i => i)));
         }
 
-        private static void ListItems(List<string>? todoList)
+        private static void ListItems(List<string>? todoList, string? textToSearchFor = null)
         {
             if (todoList == null)
             {
@@ -116,6 +126,11 @@ namespace Todo
             var i = 0;
             foreach (var itm in todoList ?? new List<string>())
             {
+                if (!string.IsNullOrEmpty(textToSearchFor) 
+                    && !itm.Contains(textToSearchFor, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    continue;
+                }
                 Console.WriteLine($"{i++}: {itm}");
             }
         }
