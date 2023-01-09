@@ -96,7 +96,7 @@ namespace Todo
                     break;
             }
 
-            File.WriteAllText(fileName, JsonConvert.SerializeObject(todoList));
+            File.WriteAllText(fileName, JsonConvert.SerializeObject(todoList.OrderBy(i => i)));
         }
 
         private static void ListItems(List<string>? todoList)
