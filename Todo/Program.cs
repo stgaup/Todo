@@ -30,6 +30,7 @@ namespace Todo
 
             switch (arg)
             {
+                case "?":
                 case "h":
                 case "help":
                     Console.WriteLine("Todo:");
