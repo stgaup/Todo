@@ -47,6 +47,11 @@ namespace Todo
                     break;
                 case "a":
                 case "add":
+                    if (args.Length < 2)
+                    {
+                        Console.WriteLine("Missing argument. Expected text for new item as argument.");
+                        return;
+                    }
                     var item = args[1];
                     todoList.Add(item);
                     ListItems(todoList);
@@ -55,7 +60,7 @@ namespace Todo
                 case "remove":
                     if (args.Length < 2)
                     {
-                        Console.WriteLine("Missing argument. Expected number of item to delete.");
+                        Console.WriteLine("Missing argument. Expected number of item to delete as argument.");
                         return;
                     }
                     var itemToDelete = args[1];
@@ -77,6 +82,8 @@ namespace Todo
                     break;
                 case "l":
                 case "list":
+                    ListItems(todoList);
+                    break;
                 default:
                     if (!string.IsNullOrWhiteSpace(arg))
                     {
