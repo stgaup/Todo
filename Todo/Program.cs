@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Todo
 {
@@ -9,7 +6,12 @@ namespace Todo
     {
         static void Main(string[] args)
         {
-            const string fileName = "todo.json";
+            var path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments).TrimEnd('\\') + "\\Todo\\";
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            var fileName = $"{path}todo.json";
 
             // Create a list to store our todo items
             List<string>? todoList = new List<string>();
@@ -19,7 +21,7 @@ namespace Todo
             {
                 todoList = JsonConvert.DeserializeObject<List<string>>(File.ReadAllText(fileName)) ?? new List<string>();
             }
-            catch (System.IO.FileNotFoundException)
+            catch (FileNotFoundException)
             {
                 todoList = new List<string>();
             }
@@ -34,10 +36,11 @@ namespace Todo
                     Console.WriteLine("-----------------------------------------------------------------------");
                     Console.WriteLine("Usage: TODO {arg} {parameter}");
                     Console.WriteLine("arg:");
-                    Console.WriteLine("  help, h  : Writes this help text. No parameter.");
-                    Console.WriteLine("  add, a   : Adds todo item. Parameter is item; must be quoted.");
-                    Console.WriteLine("  remove, r: Removes an item. Parameter is index of item to be removed.");
-                    Console.WriteLine("  list, l  : Lists all items. No parameter.");
+                    Console.WriteLine("  help, h   : Writes this help text. No parameter.");
+                    Console.WriteLine("  add, a    : Adds todo item. Parameter is item; must be quoted.");
+                    Console.WriteLine("  remove, r : Removes an item. Parameter is index of item to be removed.");
+                    Console.WriteLine("  list, l   : Lists all items. No parameter.");
+                    Console.WriteLine("  clear     : Clears list of all items.");
                     Console.WriteLine("If no argument is given, the list action will be executed.");
                     Console.WriteLine();
                     break;
