@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Todo": {
+      "commandName": "Project",
+      "commandLineArgs": "a 1234"
+    }
+  }
+}

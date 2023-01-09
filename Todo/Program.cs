@@ -110,7 +110,7 @@ namespace Todo
             File.WriteAllText(fileName, JsonConvert.SerializeObject(todoList.OrderBy(i => i)));
         }
 
-        private static void ListItems(List<string>? todoList, string? textToSearchFor = null)
+        private static void ListItems(List<string?>? todoList, string? textToSearchFor = null)
         {
             if (todoList == null)
             {
@@ -125,7 +125,7 @@ namespace Todo
             }
 
             var i = 0;
-            foreach (var itm in todoList ?? new List<string>())
+            foreach (var itm in todoList?.OrderBy(e => e)?.ToList() ?? new List<string?>())
             {
                 if (!string.IsNullOrEmpty(textToSearchFor) 
                     && !itm.Contains(textToSearchFor, StringComparison.InvariantCultureIgnoreCase))
