@@ -35,11 +35,12 @@ namespace Todo
                 case "help":
                     Console.WriteLine("Todo:");
                     Console.WriteLine("-----------------------------------------------------------------------");
-                    Console.WriteLine("Usage: TODO {arg} {parameter}");
+                    Console.WriteLine("Usage: TODO {arg} {parameter} [parameter2]");
                     Console.WriteLine("arg:");
                     Console.WriteLine("  help, h   : Writes this help text. No parameter.");
                     Console.WriteLine("  add, a    : Adds todo item. Parameter is item; must be quoted.");
                     Console.WriteLine("  remove, r : Removes an item. Parameter is index of item to be removed.");
+                    Console.WriteLine("  edit, e   : Edit an item. Parameter is index of item to be edited. Parameter2 is new text.");
                     Console.WriteLine("  list, l   : Lists all items. No parameter.");
                     Console.WriteLine("  find, d   : Lists all items that contain the given text. Parameter is text to search for.");
                     Console.WriteLine("  clear     : Clears list of all items.");
@@ -61,7 +62,7 @@ namespace Todo
                 case "remove":
                     if (args.Length < 2)
                     {
-                        Console.WriteLine("Missing argument. Expected number of item to delete as argument.");
+                        Console.WriteLine("Missing argument. Expected number of item to be removed as argument.");
                         return;
                     }
                     var itemToDelete = args[1];
@@ -69,8 +70,22 @@ namespace Todo
                     if (itemNumber >= todoList.Count)
                     {
                         Console.WriteLine("Invalid item number. Cannot remove.");
+                        return;
                     }
                     todoList.RemoveAt(itemNumber);
+                    ListItems(todoList);
+                    break;
+                case "e":
+                case "edit":
+                    if (args.Length < 3)
+                    {
+                        Console.WriteLine("Missing argument. Expected number of item to delete as argument.");
+                        return;
+                    }
+                    var itemToEdit = args[1];
+                    var itemNumberToEdit = int.Parse(itemToEdit);
+                    var newText = args[2];
+                    todoList[itemNumberToEdit] = newText;
                     ListItems(todoList);
                     break;
                 case "clear":
