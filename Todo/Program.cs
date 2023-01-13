@@ -6,12 +6,14 @@ namespace Todo
     {
         static void Main(string?[] args)
         {
+            const string FILENAME = "todo.json";
+
             var path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments).TrimEnd('\\') + "\\Todo\\";
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
             }
-            var fileName = $"{path}todo1.json";
+            var fileName = $"{path}{FILENAME}";
 
             // Create a list to store our todo items
             List<Todo> todoList;
