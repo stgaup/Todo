@@ -11,19 +11,19 @@ namespace Todo
             {
                 Directory.CreateDirectory(path);
             }
-            var fileName = $"{path}todo.json";
+            var fileName = $"{path}todo1.json";
 
             // Create a list to store our todo items
-            List<string?> todoList = new List<string?>();
+            List<Todo> todoList;
 
             // Load the todo list from the JSON file
             try
             {
-                todoList = JsonConvert.DeserializeObject<List<string>>(File.ReadAllText(fileName)) ?? new List<string?>();
+                todoList = JsonConvert.DeserializeObject<List<Todo>>(File.ReadAllText(fileName)) ?? new List<Todo>();
             }
             catch (FileNotFoundException)
             {
-                todoList = new List<string?>();
+                todoList = new List<Todo>();
             }
 
             var arg = args.Length > 0 ? args[0] : string.Empty;
@@ -40,7 +40,8 @@ namespace Todo
                     Console.WriteLine("  help, h   : Writes this help text. No parameter.");
                     Console.WriteLine("  add, a    : Adds todo item. Parameter is item; must be quoted.");
                     Console.WriteLine("  remove, r : Removes an item. Parameter is index of item to be removed.");
-                    Console.WriteLine("  edit, e   : Edit an item. Parameter is index of item to be edited. Parameter2 is new text.");
+                    Console.WriteLine("  edit, e   : Edit text of an item. Parameter is index of item to be edited. Parameter2 is new text.");
+                    Console.WriteLine("  pri, p    : Set priority of an item. Parameter is index of item. Parameter2 is ne priority.");
                     Console.WriteLine("  list, l   : Lists all items. No parameter.");
                     Console.WriteLine("  find, d   : Lists all items that contain the given text. Parameter is text to search for.");
                     Console.WriteLine("  clear     : Clears list of all items.");
@@ -49,13 +50,18 @@ namespace Todo
                     break;
                 case "a":
                 case "add":
-                    if (args.Length < 2)
+                    if (args.Length < 3)
                     {
                         Console.WriteLine("Missing argument. Expected text for new item as argument.");
                         return;
                     }
-                    var item = args[1];
-                    todoList.Add(item);
+
+                    if (!int.TryParse(args[1], out var pri_a))
+                    {
+                        Console.WriteLine("Invalid parameter: Priority");
+                    }
+                    var text_a = args[2];
+                    todoList.Add(new Todo(pri_a, text_a));
                     ListItems(todoList);
                     break;
                 case "r":
@@ -79,13 +85,33 @@ namespace Todo
                 case "edit":
                     if (args.Length < 3)
                     {
-                        Console.WriteLine("Missing argument. Expected number of item to delete as argument.");
+                        Console.WriteLine("Missing argument. There should be 3 arguments.");
                         return;
                     }
                     var itemToEdit = args[1];
                     var itemNumberToEdit = int.Parse(itemToEdit);
-                    var newText = args[2];
-                    todoList[itemNumberToEdit] = newText;
+                    string newText = args[2];
+                    todoList[itemNumberToEdit].Text = newText;
+                    ListItems(todoList);
+                    break;
+                case "p":
+                case "pri":
+                    if (args.Length < 3)
+                    {
+                        Console.WriteLine("Missing argument. The pri/p command requires 3 arguments.");
+                        return;
+                    }
+                    if (!int.TryParse(args[1], out var itemToPri))
+                    {
+                        Console.WriteLine("Invalid parameter: Item");
+                        return;
+                    }
+                    if (!int.TryParse(args[2], out var newPri))
+                    {
+                        Console.WriteLine("Invalid parameter: Priority");
+                        return;
+                    }
+                    todoList[itemToPri].Priority = newPri;
                     ListItems(todoList);
                     break;
                 case "clear":
@@ -122,10 +148,10 @@ namespace Todo
                     break;
             }
 
-            File.WriteAllText(fileName, JsonConvert.SerializeObject(todoList.OrderBy(i => i)));
+            File.WriteAllText(fileName, JsonConvert.SerializeObject(todoList.OrderBy(i => i.Priority).ThenBy(i => i.Text)));
         }
 
-        private static void ListItems(List<string?>? todoList, string? textToSearchFor = null)
+        private static void ListItems(List<Todo> todoList, string? textToSearchFor = null)
         {
             if (todoList == null)
             {
@@ -140,15 +166,16 @@ namespace Todo
             }
 
             var i = 0;
-            foreach (var itm in todoList?.OrderBy(e => e)?.ToList() ?? new List<string?>())
+            foreach (var itm in todoList?.OrderBy(e => e.Priority)?.ThenBy(e => e.Text)?.ToList() ?? new List<Todo>())
             {
                 if (!string.IsNullOrEmpty(textToSearchFor) 
-                    && !itm.Contains(textToSearchFor, StringComparison.InvariantCultureIgnoreCase))
+                    && !itm.Text.Contains(textToSearchFor, StringComparison.InvariantCultureIgnoreCase))
                 {
                     i++;
                     continue;
                 }
-                Console.WriteLine($"{i++}: {itm}");
+                Console.WriteLine($"{i:00}: {itm.Priority:00}:{itm.Text}");
+                i++;
             }
         }
     }

@@ -2,7 +2,7 @@
   "profiles": {
     "Todo": {
       "commandName": "Project",
-      "commandLineArgs": "e 1 hello"
+      "commandLineArgs": "a 10 test"
     }
   }
 }
