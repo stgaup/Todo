@@ -45,7 +45,7 @@ namespace Todo
                     Console.WriteLine("  edit, e   : Edit text of an item. Parameter is index of item to be edited. Parameter2 is new text.");
                     Console.WriteLine("  pri, p    : Set priority of an item. Parameter is index of item. Parameter2 is new priority.");
                     Console.WriteLine("  list, l   : Lists all items. No parameter.");
-                    Console.WriteLine("  find, d   : Lists all items that contain the given text. Parameter is text to search for.");
+                    Console.WriteLine("  find, f   : Lists all items that contain the given text. Parameter is text to search for.");
                     Console.WriteLine("  clear     : Clears list of all items.");
                     Console.WriteLine("If no argument is given, the list action will be executed.");
                     Console.WriteLine();
