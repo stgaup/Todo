@@ -39,15 +39,15 @@ namespace Todo
                     Console.WriteLine("-----------------------------------------------------------------------");
                     Console.WriteLine("Usage: TODO {arg} {parameter} [parameter2]");
                     Console.WriteLine("arg:");
-                    Console.WriteLine("  help, h   : Writes this help text. No parameter.");
-                    Console.WriteLine("  add, a    : Adds todo item. Parameter is priority. Parameter2 is item; must be quoted.");
-                    Console.WriteLine("  remove, r : Removes an item. Parameter is index of item to be removed.");
-                    Console.WriteLine("  edit, e   : Edit text of an item. Parameter is index of item to be edited. Parameter2 is new text.");
-                    Console.WriteLine("  pri, p    : Set priority of an item. Parameter is index of item. Parameter2 is new priority.");
-                    Console.WriteLine("  list, l   : Lists all items. No parameter.");
-                    Console.WriteLine("  find, f   : Lists all items that contain the given text. Parameter is text to search for.");
+                    Console.WriteLine("  h, help   : Writes this help text. No parameter.");
+                    Console.WriteLine("  a, add    : Adds todo item. Parameter is priority. Parameter2 is item; must be quoted.");
+                    Console.WriteLine("  r, remove : Removes an item. Parameter is index of item to be removed.");
+                    Console.WriteLine("  e, edit   : Edit text of an item. Parameter is index of item to be edited. Parameter2 is new text.");
+                    Console.WriteLine("  p, pri    : Set priority of an item. Parameter is index of item. Parameter2 is new priority.");
+                    Console.WriteLine("  l, list   : Lists all items. No parameter.");
+                    Console.WriteLine("  f, find   : Lists all items that contain the given text. Parameter is text to search for.");
                     Console.WriteLine("  clear     : Clears list of all items.");
-                    Console.WriteLine("If no argument is given, the list action will be executed.");
+                    Console.WriteLine("If no argument is given, the \"list\" action will be executed.");
                     Console.WriteLine();
                     break;
                 case "a":
